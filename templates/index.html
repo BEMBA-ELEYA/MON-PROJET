@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace Universitaire</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur Marketplace Universitaire</h1>
+        <nav>
+            <a href="/login">Se connecter</a>
+            <a href="/register">Créer un compte</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Toutes les annonces</h2>
+        <div id="annonces-container">
+            <form action="/" method="GET">
+                <input type="text" name="search" placeholder="Recherche par nom...">
+                <select name="type">
+                    <option value="">Tous les types</option>
+                    <option value="livre">Livre</option>
+                    <option value="service">Service</option>
+                    <option value="matériel">Matériel</option>
+                </select>
+                <button type="submit">Rechercher</button>
+            </form>
+            {% for annonce, photo_url in annonces %}
+            <div class="annonce">
+                <h3>{{ annonce[1] }}</h3>
+                <p>{{ annonce[2] }}</p>
+                <p>Prix : {{ annonce[3] }} MRU</p>
+                <p>Publié le : {{ annonce[4] }}</p>
+                <p>Type : {{ annonce[5] }}</p>
+                {% if photo_url %}
+                    <img src="{{ url_for('static', filename=photo_url) }}" alt="Image de l'annonce" width="200">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

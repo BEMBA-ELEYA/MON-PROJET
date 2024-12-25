@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier l'annonce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Modifier l'annonce</h1>
+        <a href="/dashboard/{{ matricule }}">Retour au tableau de bord</a>
+    </header>
+    <main>
+       <form action="{{ url_for('edit_ad', id_Annonce=annonce[0], matricule=matricule) }}" method="POST" enctype="multipart/form-data">
+    <label for="nom">Nom de l'annonce :</label>
+    <input type="text" id="nom" name="nom" value="{{ annonce[0] }}" required>
+
+    <label for="description">Description :</label>
+    <textarea id="description" name="description" required>{{ annonce[1] }}</textarea>
+
+    <label for="prix">Prix :</label>
+    <input type="number" id="prix" name="prix" value="{{ annonce[2] }}" required>
+
+    <label for="type_annonce">Type d'annonce :</label>
+    <select id="type_annonce" name="type_annonce" required>
+    <option value="livre" {% if annonce[3] =='livre' %} selected {% endif %}>Livre</option>
+    <option value="service" {% if annonce[3] =='service' %} selected {% endif %}>Service</option>
+    <option value="matériel" {% if annonce[3] =='matériel' %} selected {% endif %}>Matériel</option>
+</select>
+
+    <label for="image">Image :</label>
+    {% if photo and photo[0] %}
+        <p>Image actuelle:</p>
+        <img src="{{ url_for('static', filename=photo[0]) }}" alt="Image actuelle" width="200">
+    {% else %}
+        <p>Aucune image disponible</p>
+    {% endif %}
+    <input type="file" id="image" name="image">
+
+    <button type="submit">Modifier</button>
+</form>
+    </main>
+</body>
+</html>
